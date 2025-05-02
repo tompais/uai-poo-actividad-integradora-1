@@ -6,8 +6,8 @@ namespace ActividadIntegradoraNro1
 {
     public partial class GrillaPersonasYAutos : Form
     {
-        private List<Persona> Personas { get; set; } = [];
-        private List<Auto> Autos { get; set; } = [];
+        private HashSet<Persona> Personas { get; set; } = [];
+        private HashSet<Auto> Autos { get; set; } = [];
 
         public GrillaPersonasYAutos()
         {
@@ -22,14 +22,23 @@ namespace ActividadIntegradoraNro1
             {
                 var persona = formularioAgregarPersona.Persona;
 
-                AgregarPersonaALaLista(in persona);
-                AgregarPersonaAGrilla(persona);
+                if (Personas.All(p => p.DNI != persona.DNI))
+                {
+                    AgregarPersonaALaLista(in persona);
+                    AgregarPersonaAGrilla(persona);
+                }
+                else
+                {
+                    MessageBox.Show($"Ya existe una persona con el DNI {persona.DNI}.");
+                }
+
+
             }
         }
 
         private void AgregarPersonaAGrilla(Persona persona) => grillaPersonas.Rows.Add(persona.DNI, persona.Nombre, persona.Apellido, persona.Cantidad_De_Autos());
 
-        private void AgregarPersonaALaLista(in Persona persona) => Personas.Add(persona);
+        private bool AgregarPersonaALaLista(in Persona persona) => Personas.Add(persona);
 
         private void BotonAgregarAuto_Click(object sender, EventArgs e)
         {
@@ -38,14 +47,21 @@ namespace ActividadIntegradoraNro1
             {
                 var auto = formularioAgregarAuto.Auto;
 
-                AgregarAutoALaLista(in auto);
-                AgregarAutoAGrilla(auto);
+                if (Autos.All(a => a.Patente != auto.Patente))
+                {
+                    AgregarAutoALaLista(in auto);
+                    AgregarAutoAGrilla(auto);
+                }
+                else
+                {
+                    MessageBox.Show($"Ya existe un auto con la patente {auto.Patente}.");
+                }
             }
         }
 
         private void AgregarAutoAGrilla(Auto auto) => grillaAutos.Rows.Add(auto.Patente, auto.Marca, auto.Modelo, auto.Año, auto.Precio);
 
-        private void AgregarAutoALaLista(in Auto auto) => Autos.Add(auto);
+        private bool AgregarAutoALaLista(in Auto auto) => Autos.Add(auto);
 
         private void VerificarSiAsignacionDeAutoAPersonaEsPosible(object sender, EventArgs e) => ActualizarEstadoBotonAsignarAutoAPersona();
 
@@ -67,6 +83,7 @@ namespace ActividadIntegradoraNro1
         {
             var auto = ObtenerAutoDeFilaSeleccionada();
             var persona = ObtenerPersonaDeFilaSeleccionada();
+
             if (PersonaNoEsDueñoDelAutoSeleccionado(auto, persona))
             {
                 EliminarDueñoDeAuto(in auto);
@@ -86,7 +103,10 @@ namespace ActividadIntegradoraNro1
         {
             grillaPersonas.Rows.Clear();
 
-            Personas.ForEach(AgregarPersonaAGrilla);
+            foreach (var persona in Personas)
+            {
+                AgregarPersonaAGrilla(persona);
+            }
         }
 
         private static void EliminarDueñoDeAuto(in Auto auto)

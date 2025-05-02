@@ -8,6 +8,8 @@
 
         public uint Cantidad_De_Autos() => (uint)Autos.Count;
 
+        public override int GetHashCode() => DNI.GetHashCode();
+
         ~Persona()
         {
             MessageBox.Show($"La Persona con DNI {DNI} ha sido eliminada!");
