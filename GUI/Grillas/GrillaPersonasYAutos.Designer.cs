@@ -43,8 +43,17 @@
             Año = new DataGridViewTextBoxColumn();
             Precio = new DataGridViewTextBoxColumn();
             botonAgregarAuto = new Button();
+            botonAsignarAutoAPersona = new Button();
+            etiquetaAutosPersonaSeleccionada = new Label();
+            grillaAutosDePersona = new DataGridView();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)grillaPersonas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grillaAutos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)grillaAutosDePersona).BeginInit();
             SuspendLayout();
             // 
             // grillaPersonas
@@ -60,10 +69,13 @@
             grillaPersonas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grillaPersonas.Size = new Size(443, 150);
             grillaPersonas.TabIndex = 0;
+            grillaPersonas.SelectionChanged += VerificarSiAsignacionDeAutoAPersonaEsPosible;
+            grillaPersonas.SelectionChanged += MostrarAutosDePersona;
             // 
             // DNI
             // 
             DNI.HeaderText = "DNI";
+            DNI.MaxInputLength = 8;
             DNI.Name = "DNI";
             DNI.ReadOnly = true;
             // 
@@ -96,7 +108,7 @@
             // 
             // botonAgregarPersona
             // 
-            botonAgregarPersona.Location = new Point(461, 27);
+            botonAgregarPersona.Location = new Point(12, 373);
             botonAgregarPersona.Name = "botonAgregarPersona";
             botonAgregarPersona.Size = new Size(110, 23);
             botonAgregarPersona.TabIndex = 2;
@@ -126,28 +138,33 @@
             grillaAutos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grillaAutos.Size = new Size(443, 150);
             grillaAutos.TabIndex = 3;
+            grillaAutos.SelectionChanged += VerificarSiAsignacionDeAutoAPersonaEsPosible;
             // 
             // Patente
             // 
             Patente.HeaderText = "Patente";
+            Patente.MaxInputLength = 7;
             Patente.Name = "Patente";
             Patente.ReadOnly = true;
             // 
             // Marca
             // 
             Marca.HeaderText = "Marca";
+            Marca.MaxInputLength = 50;
             Marca.Name = "Marca";
             Marca.ReadOnly = true;
             // 
             // Modelo
             // 
             Modelo.HeaderText = "Modelo";
+            Modelo.MaxInputLength = 50;
             Modelo.Name = "Modelo";
             Modelo.ReadOnly = true;
             // 
             // Año
             // 
             Año.HeaderText = "Año";
+            Año.MaxInputLength = 4;
             Año.Name = "Año";
             Año.ReadOnly = true;
             // 
@@ -159,7 +176,7 @@
             // 
             // botonAgregarAuto
             // 
-            botonAgregarAuto.Location = new Point(461, 217);
+            botonAgregarAuto.Location = new Point(128, 373);
             botonAgregarAuto.Name = "botonAgregarAuto";
             botonAgregarAuto.Size = new Size(110, 23);
             botonAgregarAuto.TabIndex = 5;
@@ -167,11 +184,78 @@
             botonAgregarAuto.UseVisualStyleBackColor = true;
             botonAgregarAuto.Click += BotonAgregarAuto_Click;
             // 
+            // botonAsignarAutoAPersona
+            // 
+            botonAsignarAutoAPersona.Enabled = false;
+            botonAsignarAutoAPersona.Location = new Point(12, 402);
+            botonAsignarAutoAPersona.Name = "botonAsignarAutoAPersona";
+            botonAsignarAutoAPersona.Size = new Size(147, 23);
+            botonAsignarAutoAPersona.TabIndex = 6;
+            botonAsignarAutoAPersona.Text = "Asignar Auto a Persona";
+            botonAsignarAutoAPersona.UseVisualStyleBackColor = true;
+            botonAsignarAutoAPersona.Click += BotonAsignarAutoAPersona_Click;
+            // 
+            // etiquetaAutosPersonaSeleccionada
+            // 
+            etiquetaAutosPersonaSeleccionada.AutoSize = true;
+            etiquetaAutosPersonaSeleccionada.Location = new Point(474, 9);
+            etiquetaAutosPersonaSeleccionada.Name = "etiquetaAutosPersonaSeleccionada";
+            etiquetaAutosPersonaSeleccionada.Size = new Size(171, 15);
+            etiquetaAutosPersonaSeleccionada.TabIndex = 9;
+            etiquetaAutosPersonaSeleccionada.Text = "Autos de Persona Seleccionada";
+            // 
+            // grillaAutosDePersona
+            // 
+            grillaAutosDePersona.AllowUserToAddRows = false;
+            grillaAutosDePersona.AllowUserToDeleteRows = false;
+            grillaAutosDePersona.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            grillaAutosDePersona.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5 });
+            grillaAutosDePersona.Location = new Point(474, 27);
+            grillaAutosDePersona.MultiSelect = false;
+            grillaAutosDePersona.Name = "grillaAutosDePersona";
+            grillaAutosDePersona.ReadOnly = true;
+            grillaAutosDePersona.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            grillaAutosDePersona.Size = new Size(443, 150);
+            grillaAutosDePersona.TabIndex = 10;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.HeaderText = "Patente";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.HeaderText = "Marca";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.HeaderText = "Modelo";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.HeaderText = "Año";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.HeaderText = "Precio";
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            dataGridViewTextBoxColumn5.ReadOnly = true;
+            // 
             // GrillaPersonasYAutos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(950, 450);
+            ClientSize = new Size(930, 450);
+            Controls.Add(grillaAutosDePersona);
+            Controls.Add(etiquetaAutosPersonaSeleccionada);
+            Controls.Add(botonAsignarAutoAPersona);
             Controls.Add(botonAgregarAuto);
             Controls.Add(etiquetaAutos);
             Controls.Add(grillaAutos);
@@ -182,6 +266,7 @@
             Text = "Grilla de Autos y Dueños";
             ((System.ComponentModel.ISupportInitialize)grillaPersonas).EndInit();
             ((System.ComponentModel.ISupportInitialize)grillaAutos).EndInit();
+            ((System.ComponentModel.ISupportInitialize)grillaAutosDePersona).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -189,19 +274,27 @@
         #endregion
 
         private DataGridView grillaPersonas;
-        private DataGridViewTextBoxColumn DNI;
-        private DataGridViewTextBoxColumn Nombre;
-        private DataGridViewTextBoxColumn Apellido;
-        private DataGridViewTextBoxColumn CantAutos;
         private Label etiquetaPersonas;
         private Button botonAgregarPersona;
         private Label etiquetaAutos;
         private DataGridView grillaAutos;
+        private Button botonAgregarAuto;
+        private Button botonAsignarAutoAPersona;
+        private Label etiquetaAutosPersonaSeleccionada;
+        private DataGridView grillaAutosDePersona;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn DNI;
+        private DataGridViewTextBoxColumn Nombre;
+        private DataGridViewTextBoxColumn Apellido;
+        private DataGridViewTextBoxColumn CantAutos;
         private DataGridViewTextBoxColumn Patente;
         private DataGridViewTextBoxColumn Marca;
         private DataGridViewTextBoxColumn Modelo;
         private DataGridViewTextBoxColumn Año;
         private DataGridViewTextBoxColumn Precio;
-        private Button botonAgregarAuto;
     }
 }
