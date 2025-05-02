@@ -47,7 +47,7 @@ namespace ActividadIntegradoraNro1.GUI.Formularios
         {
             var año = campoTextoAño.Text.Trim();
 
-            return año.Length == 4 && uint.TryParse(año, out _);
+            return año.Length == 4 && uint.TryParse(año, out uint añoNumerico) && añoNumerico <= DateTime.Now.Year;
         }
 
         private bool ValidarCampoDeTextoPatente() => campoTextoPatente.Text.Trim().TieneFormatoDePatenteArgentinaValida();
