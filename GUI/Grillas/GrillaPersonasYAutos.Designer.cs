@@ -51,6 +51,8 @@
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
+            botonEliminarAuto = new Button();
+            botonEliminarPersona = new Button();
             ((System.ComponentModel.ISupportInitialize)grillaPersonas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grillaAutos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grillaAutosDePersona).BeginInit();
@@ -69,7 +71,6 @@
             grillaPersonas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grillaPersonas.Size = new Size(443, 150);
             grillaPersonas.TabIndex = 0;
-            grillaPersonas.SelectionChanged += VerificarSiAsignacionDeAutoAPersonaEsPosible;
             grillaPersonas.SelectionChanged += MostrarAutosDePersona;
             // 
             // DNI
@@ -108,7 +109,7 @@
             // 
             // botonAgregarPersona
             // 
-            botonAgregarPersona.Location = new Point(12, 373);
+            botonAgregarPersona.Location = new Point(12, 402);
             botonAgregarPersona.Name = "botonAgregarPersona";
             botonAgregarPersona.Size = new Size(110, 23);
             botonAgregarPersona.TabIndex = 2;
@@ -176,7 +177,7 @@
             // 
             // botonAgregarAuto
             // 
-            botonAgregarAuto.Location = new Point(128, 373);
+            botonAgregarAuto.Location = new Point(12, 373);
             botonAgregarAuto.Name = "botonAgregarAuto";
             botonAgregarAuto.Size = new Size(110, 23);
             botonAgregarAuto.TabIndex = 5;
@@ -187,7 +188,7 @@
             // botonAsignarAutoAPersona
             // 
             botonAsignarAutoAPersona.Enabled = false;
-            botonAsignarAutoAPersona.Location = new Point(12, 402);
+            botonAsignarAutoAPersona.Location = new Point(308, 373);
             botonAsignarAutoAPersona.Name = "botonAsignarAutoAPersona";
             botonAsignarAutoAPersona.Size = new Size(147, 23);
             botonAsignarAutoAPersona.TabIndex = 6;
@@ -248,11 +249,31 @@
             dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             dataGridViewTextBoxColumn5.ReadOnly = true;
             // 
+            // botonEliminarAuto
+            // 
+            botonEliminarAuto.Location = new Point(128, 373);
+            botonEliminarAuto.Name = "botonEliminarAuto";
+            botonEliminarAuto.Size = new Size(110, 23);
+            botonEliminarAuto.TabIndex = 11;
+            botonEliminarAuto.Text = "Eliminar Auto";
+            botonEliminarAuto.UseVisualStyleBackColor = true;
+            // 
+            // botonEliminarPersona
+            // 
+            botonEliminarPersona.Location = new Point(128, 402);
+            botonEliminarPersona.Name = "botonEliminarPersona";
+            botonEliminarPersona.Size = new Size(110, 23);
+            botonEliminarPersona.TabIndex = 12;
+            botonEliminarPersona.Text = "Eliminar Persona";
+            botonEliminarPersona.UseVisualStyleBackColor = true;
+            // 
             // GrillaPersonasYAutos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(930, 450);
+            Controls.Add(botonEliminarPersona);
+            Controls.Add(botonEliminarAuto);
             Controls.Add(grillaAutosDePersona);
             Controls.Add(etiquetaAutosPersonaSeleccionada);
             Controls.Add(botonAsignarAutoAPersona);
@@ -296,5 +317,7 @@
         private DataGridViewTextBoxColumn Modelo;
         private DataGridViewTextBoxColumn Año;
         private DataGridViewTextBoxColumn Precio;
+        private Button botonEliminarAuto;
+        private Button botonEliminarPersona;
     }
 }
