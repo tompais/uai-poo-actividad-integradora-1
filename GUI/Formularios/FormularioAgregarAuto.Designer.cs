@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             campoTextoPatente = new TextBox();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
+            campoDeTextoMarca = new TextBox();
+            campoDeTextoModelo = new TextBox();
             campoTextoAño = new TextBox();
             etiquetaPatente = new Label();
             etiquetaMarca = new Label();
@@ -49,20 +49,25 @@
             campoTextoPatente.Name = "campoTextoPatente";
             campoTextoPatente.Size = new Size(100, 23);
             campoTextoPatente.TabIndex = 0;
+            campoTextoPatente.TextChanged += ValidarCampos;
             // 
-            // textBox2
+            // campoDeTextoMarca
             // 
-            textBox2.Location = new Point(116, 76);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(100, 23);
-            textBox2.TabIndex = 1;
+            campoDeTextoMarca.Location = new Point(116, 76);
+            campoDeTextoMarca.MaxLength = 50;
+            campoDeTextoMarca.Name = "campoDeTextoMarca";
+            campoDeTextoMarca.Size = new Size(100, 23);
+            campoDeTextoMarca.TabIndex = 1;
+            campoDeTextoMarca.TextChanged += ValidarCampos;
             // 
-            // textBox3
+            // campoDeTextoModelo
             // 
-            textBox3.Location = new Point(116, 105);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(100, 23);
-            textBox3.TabIndex = 2;
+            campoDeTextoModelo.Location = new Point(116, 105);
+            campoDeTextoModelo.MaxLength = 50;
+            campoDeTextoModelo.Name = "campoDeTextoModelo";
+            campoDeTextoModelo.Size = new Size(100, 23);
+            campoDeTextoModelo.TabIndex = 2;
+            campoDeTextoModelo.TextChanged += ValidarCampos;
             // 
             // campoTextoAño
             // 
@@ -71,6 +76,7 @@
             campoTextoAño.Name = "campoTextoAño";
             campoTextoAño.Size = new Size(100, 23);
             campoTextoAño.TabIndex = 3;
+            campoTextoAño.TextChanged += ValidarCampos;
             // 
             // etiquetaPatente
             // 
@@ -126,6 +132,7 @@
             botonAgregar.TabIndex = 10;
             botonAgregar.Text = "Agregar";
             botonAgregar.UseVisualStyleBackColor = true;
+            botonAgregar.Click += BotonAgregar_Click;
             // 
             // campoNumericoPrecio
             // 
@@ -137,6 +144,7 @@
             campoNumericoPrecio.Size = new Size(100, 23);
             campoNumericoPrecio.TabIndex = 11;
             campoNumericoPrecio.Value = new decimal(new int[] { 5000000, 0, 0, 0 });
+            campoNumericoPrecio.ValueChanged += ValidarCampos;
             // 
             // FormularioAgregarAuto
             // 
@@ -151,8 +159,8 @@
             Controls.Add(etiquetaMarca);
             Controls.Add(etiquetaPatente);
             Controls.Add(campoTextoAño);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
+            Controls.Add(campoDeTextoModelo);
+            Controls.Add(campoDeTextoMarca);
             Controls.Add(campoTextoPatente);
             Name = "FormularioAgregarAuto";
             Text = "Agregar Auto";
@@ -165,8 +173,8 @@
         #endregion
 
         private TextBox campoTextoPatente;
-        private TextBox textBox2;
-        private TextBox textBox3;
+        private TextBox campoDeTextoMarca;
+        private TextBox campoDeTextoModelo;
         private TextBox campoTextoAño;
         private Label etiquetaPatente;
         private Label etiquetaMarca;

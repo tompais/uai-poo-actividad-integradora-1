@@ -161,7 +161,7 @@
             botonAgregarAuto.TabIndex = 5;
             botonAgregarAuto.Text = "Agregar Auto";
             botonAgregarAuto.UseVisualStyleBackColor = true;
-            botonAgregarAuto.Click += botonAgregarAuto_Click;
+            botonAgregarAuto.Click += BotonAgregarAuto_Click;
             // 
             // GrillaPersonasYAutos
             // 

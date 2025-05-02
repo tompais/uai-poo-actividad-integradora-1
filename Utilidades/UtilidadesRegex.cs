@@ -9,5 +9,8 @@ namespace ActividadIntegradoraNro1.GUI
 
         [GeneratedRegex(@"^[A-Z]{3}\d{3}$|^[A-Z]{2}\d{3}[A-Z]{2}$")]
         public static partial Regex PatenteArgentinaValida();
+
+        [GeneratedRegex(@"^[\p{L}0-9\s]+$")]
+        public static partial Regex LetrasYNumerosConEspacios();
     }
 }

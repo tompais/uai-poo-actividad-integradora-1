@@ -1,15 +1,5 @@
 ﻿using ActividadIntegradoraNro1.Clases;
 using ActividadIntegradoraNro1.Utilidades;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ActividadIntegradoraNro1.GUI
 {
