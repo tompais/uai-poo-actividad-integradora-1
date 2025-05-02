@@ -54,8 +54,10 @@
             grillaPersonas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             grillaPersonas.Columns.AddRange(new DataGridViewColumn[] { DNI, Nombre, Apellido, CantAutos });
             grillaPersonas.Location = new Point(12, 27);
+            grillaPersonas.MultiSelect = false;
             grillaPersonas.Name = "grillaPersonas";
             grillaPersonas.ReadOnly = true;
+            grillaPersonas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grillaPersonas.Size = new Size(443, 150);
             grillaPersonas.TabIndex = 0;
             // 
@@ -118,8 +120,10 @@
             grillaAutos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             grillaAutos.Columns.AddRange(new DataGridViewColumn[] { Patente, Marca, Modelo, Año, Precio });
             grillaAutos.Location = new Point(12, 217);
+            grillaAutos.MultiSelect = false;
             grillaAutos.Name = "grillaAutos";
             grillaAutos.ReadOnly = true;
+            grillaAutos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grillaAutos.Size = new Size(443, 150);
             grillaAutos.TabIndex = 3;
             // 
