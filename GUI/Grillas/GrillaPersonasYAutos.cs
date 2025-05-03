@@ -22,7 +22,7 @@ namespace ActividadIntegradoraNro1
             {
                 var persona = formularioAgregarPersona.Persona;
 
-                if (Personas.All(p => p.DNI != persona.DNI))
+                if (EsPersonaUnicaEnLista(persona))
                 {
                     AgregarPersonaALaLista(in persona);
                     AgregarPersonaAGrilla(persona);
@@ -36,6 +36,8 @@ namespace ActividadIntegradoraNro1
             }
         }
 
+        private bool EsPersonaUnicaEnLista(Persona persona) => Personas.All(p => p.DNI != persona.DNI);
+
         private void AgregarPersonaAGrilla(Persona persona) => grillaPersonas.Rows.Add(persona.DNI, persona.Nombre, persona.Apellido, persona.Cantidad_De_Autos());
 
         private bool AgregarPersonaALaLista(in Persona persona) => Personas.Add(persona);
@@ -47,7 +49,7 @@ namespace ActividadIntegradoraNro1
             {
                 var auto = formularioAgregarAuto.Auto;
 
-                if (Autos.All(a => a.Patente != auto.Patente))
+                if (EsAutoUnicoEnLista(auto))
                 {
                     AgregarAutoALaLista(in auto);
                     AgregarAutoAGrilla(auto);
@@ -59,11 +61,11 @@ namespace ActividadIntegradoraNro1
             }
         }
 
+        private bool EsAutoUnicoEnLista(Auto auto) => Autos.All(a => a.Patente != auto.Patente);
+
         private void AgregarAutoAGrilla(Auto auto) => grillaAutos.Rows.Add(auto.Patente, auto.Marca, auto.Modelo, auto.Año, auto.Precio);
 
         private bool AgregarAutoALaLista(in Auto auto) => Autos.Add(auto);
-
-        private void VerificarSiAsignacionDeAutoAPersonaEsPosible(object sender, EventArgs e) => ActualizarEstadoBotonAsignarAutoAPersona();
 
         private void ActualizarEstadoBotonAsignarAutoAPersona() => botonAsignarAutoAPersona.Enabled = GrillaPersonasTieneFilasSeleccionadas() && GrillaAutosTieneFilasSeleccionadas() && PersonaNoEsDueñoDelAutoSeleccionado();
 
@@ -155,7 +157,7 @@ namespace ActividadIntegradoraNro1
 
         private DataGridViewRow ObtenerFilaSeleccionadaDeGrillaAutos() => grillaAutos.SelectedRows[0];
 
-        private void MostrarAutosDePersona(object sender, EventArgs e)
+        private void ActualizarGrillaAutosDePersona()
         {
             if (GrillaPersonasTieneFilasSeleccionadas())
             {
@@ -165,11 +167,184 @@ namespace ActividadIntegradoraNro1
 
                 foreach (var auto in autos)
                 {
-                    grillaAutosDePersona.Rows.Add(auto.Patente, auto.Marca, auto.Modelo, auto.Año, auto.Precio);
+                    ActualizarGrillaAutosDePersona(auto);
                 }
+            }
+            else
+            {
+                grillaAutosDePersona.Rows.Clear();
             }
         }
 
         private ISet<Auto> ObtenerAutosDePersonaSeleccionada() => ObtenerPersonaDeFilaSeleccionada().Lista_De_Autos();
+
+        private void ActualizarEstadoBotonEliminarAuto() => botonEliminarAuto.Enabled = GrillaAutosTieneFilasSeleccionadas();
+
+        private void ActualizarEstadoBotonEliminarPersona() => botonEliminarPersona.Enabled = GrillaPersonasTieneFilasSeleccionadas();
+
+        private void BotonEliminarAuto_Click(object sender, EventArgs e)
+        {
+            if (GrillaAutosTieneFilasSeleccionadas())
+            {
+                EliminarDueñoDeAuto();
+                EliminarAutoDeLista();
+                EliminarAutoDeGrilla();
+                ActualizarGrillaPersonas();
+                ActualizarGrillaAutosDePersona();
+                ActualizarEstadoBotonEliminarAuto();
+                ActualizarEstadoBotonAsignarAutoAPersona();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+
+            }
+            else
+            {
+                MessageBox.Show("No se ha seleccionado ningún auto.");
+            }
+        }
+
+        private void EliminarDueñoDeAuto() => EliminarDueñoDeAuto(ObtenerAutoDeFilaSeleccionada());
+
+        private void EliminarAutoDeLista()
+        {
+            var patente = ObtenerPatenteDeFilaSeleccionada();
+            Autos.RemoveWhere(a => a.Patente == patente);
+        }
+
+        private void EliminarAutoDeGrilla() => grillaAutos.Rows.Remove(ObtenerFilaSeleccionadaDeGrillaAutos());
+
+        private void GrillaPersonas_SelectionChanged(object sender, EventArgs e)
+        {
+            ActualizarGrillaAutosDePersona();
+            ActualizarEstadoBotonAsignarAutoAPersona();
+            ActualizarEstadoBotonEliminarPersona();
+            ActualizarEstadoBotonModificarPersona();
+        }
+
+        private void ActualizarEstadoBotonModificarPersona() => botonModificarPersona.Enabled = GrillaPersonasTieneFilasSeleccionadas();
+
+        private void GrillaAutos_SelectionChanged(object sender, EventArgs e)
+        {
+            ActualizarEstadoBotonAsignarAutoAPersona();
+            ActualizarEstadoBotonEliminarAuto();
+            ActualizarEstadoBotonModificarAuto();
+        }
+
+        private void ActualizarEstadoBotonModificarAuto() => botonModificarAuto.Enabled = GrillaAutosTieneFilasSeleccionadas();
+
+        private void BotonEliminarPersona_Click(object sender, EventArgs e)
+        {
+            if (GrillaPersonasTieneFilasSeleccionadas())
+            {
+                QuitarAutosDePersona();
+                EliminarPersonaDeLista();
+                EliminarPersonaDeGrilla();
+                ActualizarGrillaAutosDePersona();
+                ActualizarEstadoBotonEliminarPersona();
+                ActualizarEstadoBotonAsignarAutoAPersona();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+            }
+            else
+            {
+                MessageBox.Show("No se ha seleccionado ninguna persona.");
+            }
+        }
+
+        private void EliminarPersonaDeGrilla()
+        {
+            grillaPersonas.Rows.Remove(ObtenerFilaSeleccionadaDeGrillaPersonas());
+        }
+
+        private void EliminarPersonaDeLista()
+        {
+            var dni = ObtenerDniDeFilaSeleccionada();
+            Personas.RemoveWhere(p => p.DNI == dni);
+        }
+
+        private void QuitarAutosDePersona()
+        {
+            var autos = ObtenerPersonaDeFilaSeleccionada().Lista_De_Autos();
+            foreach (var auto in autos)
+            {
+                EliminarDueñoDeAuto(in auto);
+            }
+        }
+
+        private void BotonModificarAuto_Click(object sender, EventArgs e)
+        {
+            if (GrillaAutosTieneFilasSeleccionadas())
+            {
+                var auto = ObtenerAutoDeFilaSeleccionada();
+                var formularioModificarAuto = new FormularioModificarAuto(in auto);
+                if (formularioModificarAuto.ShowDialog() == DialogResult.OK)
+                {
+                    var autoModificado = formularioModificarAuto.Auto;
+                    ActualizarAutoDeLista(in autoModificado);
+                    ActualizarGrillaAutos();
+                    ActualizarGrillaAutosDePersona();
+                }
+            }
+            else
+            {
+                MessageBox.Show("No se ha seleccionado ningún auto.");
+            }
+        }
+
+        private void ActualizarGrillaAutos()
+        {
+            grillaAutos.Rows.Clear();
+            foreach (var auto in Autos)
+            {
+                AgregarAutoAGrilla(auto);
+            }
+        }
+
+        private void ActualizarAutoDeLista(in Auto autoModificado)
+        {
+            var auto = ObtenerAutoDeFilaSeleccionada();
+            if (Autos.Remove(auto))
+            {
+                Autos.Add(autoModificado);
+                MessageBox.Show($"El auto con patente {auto.Patente} ha sido modificado.");
+            }
+            else
+            {
+                MessageBox.Show($"No se pudo modificar el auto con patente {auto.Patente}.");
+            }
+        }
+
+        private void BotonModificarPersona_Click(object sender, EventArgs e)
+        {
+            if (GrillaPersonasTieneFilasSeleccionadas())
+            {
+                var persona = ObtenerPersonaDeFilaSeleccionada();
+                var formularioModificarPersona = new FormularioModificarPersona(in persona);
+                if (formularioModificarPersona.ShowDialog() == DialogResult.OK)
+                {
+                    var personaModificada = formularioModificarPersona.Persona;
+                    ActualizarPersonaDeLista(in personaModificada);
+                    ActualizarGrillaPersonas();
+                }
+            }
+            else
+            {
+                MessageBox.Show("No se ha seleccionado ninguna persona.");
+            }
+        }
+
+        private void ActualizarPersonaDeLista(in Persona personaModificada)
+        {
+            var persona = ObtenerPersonaDeFilaSeleccionada();
+            if (Personas.Remove(persona))
+            {
+                Personas.Add(personaModificada);
+                MessageBox.Show($"La persona con DNI {persona.DNI} ha sido modificada.");
+            }
+            else
+            {
+                MessageBox.Show($"No se pudo modificar la persona con DNI {persona.DNI}.");
+            }
+        }
     }
 }

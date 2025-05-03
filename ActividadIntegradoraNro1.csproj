@@ -9,4 +9,13 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Update="GUI\Formularios\Modificar\FormularioModificarPersona.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="GUI\Formularios\Modificar\FormularioModificarAuto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

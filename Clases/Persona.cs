@@ -3,6 +3,9 @@
     public record Persona(string DNI, string Nombre, string Apellido)
     {
         private readonly HashSet<Auto> Autos = [];
+        public string DNI { get; set; } = DNI;
+        public string Nombre { get; set; } = Nombre;
+        public string Apellido { get; set; } = Apellido;
 
         public ISet<Auto> Lista_De_Autos() => Autos;
 

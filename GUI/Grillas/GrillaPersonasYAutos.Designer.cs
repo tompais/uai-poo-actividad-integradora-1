@@ -53,6 +53,8 @@
             dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
             botonEliminarAuto = new Button();
             botonEliminarPersona = new Button();
+            botonModificarAuto = new Button();
+            botonModificarPersona = new Button();
             ((System.ComponentModel.ISupportInitialize)grillaPersonas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grillaAutos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grillaAutosDePersona).BeginInit();
@@ -71,7 +73,7 @@
             grillaPersonas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grillaPersonas.Size = new Size(443, 150);
             grillaPersonas.TabIndex = 0;
-            grillaPersonas.SelectionChanged += MostrarAutosDePersona;
+            grillaPersonas.SelectionChanged += GrillaPersonas_SelectionChanged;
             // 
             // DNI
             // 
@@ -139,7 +141,7 @@
             grillaAutos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grillaAutos.Size = new Size(443, 150);
             grillaAutos.TabIndex = 3;
-            grillaAutos.SelectionChanged += VerificarSiAsignacionDeAutoAPersonaEsPosible;
+            grillaAutos.SelectionChanged += GrillaAutos_SelectionChanged;
             // 
             // Patente
             // 
@@ -188,7 +190,7 @@
             // botonAsignarAutoAPersona
             // 
             botonAsignarAutoAPersona.Enabled = false;
-            botonAsignarAutoAPersona.Location = new Point(308, 373);
+            botonAsignarAutoAPersona.Location = new Point(12, 431);
             botonAsignarAutoAPersona.Name = "botonAsignarAutoAPersona";
             botonAsignarAutoAPersona.Size = new Size(147, 23);
             botonAsignarAutoAPersona.TabIndex = 6;
@@ -251,27 +253,55 @@
             // 
             // botonEliminarAuto
             // 
-            botonEliminarAuto.Location = new Point(128, 373);
+            botonEliminarAuto.Enabled = false;
+            botonEliminarAuto.Location = new Point(254, 373);
             botonEliminarAuto.Name = "botonEliminarAuto";
             botonEliminarAuto.Size = new Size(110, 23);
             botonEliminarAuto.TabIndex = 11;
             botonEliminarAuto.Text = "Eliminar Auto";
             botonEliminarAuto.UseVisualStyleBackColor = true;
+            botonEliminarAuto.Click += BotonEliminarAuto_Click;
             // 
             // botonEliminarPersona
             // 
-            botonEliminarPersona.Location = new Point(128, 402);
+            botonEliminarPersona.Enabled = false;
+            botonEliminarPersona.Location = new Point(254, 402);
             botonEliminarPersona.Name = "botonEliminarPersona";
             botonEliminarPersona.Size = new Size(110, 23);
             botonEliminarPersona.TabIndex = 12;
             botonEliminarPersona.Text = "Eliminar Persona";
             botonEliminarPersona.UseVisualStyleBackColor = true;
+            botonEliminarPersona.Click += BotonEliminarPersona_Click;
+            // 
+            // botonModificarAuto
+            // 
+            botonModificarAuto.Enabled = false;
+            botonModificarAuto.Location = new Point(128, 373);
+            botonModificarAuto.Name = "botonModificarAuto";
+            botonModificarAuto.Size = new Size(120, 23);
+            botonModificarAuto.TabIndex = 13;
+            botonModificarAuto.Text = "Modificar Auto";
+            botonModificarAuto.UseVisualStyleBackColor = true;
+            botonModificarAuto.Click += BotonModificarAuto_Click;
+            // 
+            // botonModificarPersona
+            // 
+            botonModificarPersona.Enabled = false;
+            botonModificarPersona.Location = new Point(128, 402);
+            botonModificarPersona.Name = "botonModificarPersona";
+            botonModificarPersona.Size = new Size(120, 23);
+            botonModificarPersona.TabIndex = 14;
+            botonModificarPersona.Text = "Modificar Persona";
+            botonModificarPersona.UseVisualStyleBackColor = true;
+            botonModificarPersona.Click += BotonModificarPersona_Click;
             // 
             // GrillaPersonasYAutos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(930, 450);
+            ClientSize = new Size(930, 485);
+            Controls.Add(botonModificarPersona);
+            Controls.Add(botonModificarAuto);
             Controls.Add(botonEliminarPersona);
             Controls.Add(botonEliminarAuto);
             Controls.Add(grillaAutosDePersona);
@@ -319,5 +349,7 @@
         private DataGridViewTextBoxColumn Precio;
         private Button botonEliminarAuto;
         private Button botonEliminarPersona;
+        private Button botonModificarAuto;
+        private Button botonModificarPersona;
     }
 }
