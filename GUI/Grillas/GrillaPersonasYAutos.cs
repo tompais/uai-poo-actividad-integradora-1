@@ -53,12 +53,21 @@ namespace ActividadIntegradoraNro1
                 {
                     AgregarAutoALaLista(in auto);
                     AgregarAutoAGrilla(auto);
+                    AgregarAutoAGrillaDeAutosYDueños(auto);
                 }
                 else
                 {
                     MessageBox.Show($"Ya existe un auto con la patente {auto.Patente}.");
                 }
             }
+        }
+
+        private void AgregarAutoAGrillaDeAutosYDueños(Auto auto) => grillaAutosYDueños.Rows.Add(auto.Marca, auto.Año, auto.Modelo, auto.Patente, auto.Dueño?.DNI ?? "-", ObtenerNombreYApellidoDelDueñoFormateado(auto));
+
+        private static string ObtenerNombreYApellidoDelDueñoFormateado(Auto auto)
+        {
+            var dueño = auto.Dueño;
+            return dueño != null ? $"{dueño.Apellido}, {dueño.Nombre}" : "-";
         }
 
         private bool EsAutoUnicoEnLista(Auto auto) => Autos.All(a => a.Patente != auto.Patente);
@@ -94,10 +103,20 @@ namespace ActividadIntegradoraNro1
                 ActualizarGrillaAutosDePersona(auto);
                 ActualizarGrillaPersonas();
                 ActualizarEstadoBotonAsignarAutoAPersona();
+                ActualizarGrillaDeAutosYDueños();
             }
             else
             {
                 MessageBox.Show("La persona ya es dueña del auto seleccionado.");
+            }
+        }
+
+        private void ActualizarGrillaDeAutosYDueños()
+        {
+            grillaAutosYDueños.Rows.Clear();
+            foreach (var auto in Autos)
+            {
+                AgregarAutoAGrillaDeAutosYDueños(auto);
             }
         }
 
@@ -193,6 +212,7 @@ namespace ActividadIntegradoraNro1
                 ActualizarGrillaAutosDePersona();
                 ActualizarEstadoBotonEliminarAuto();
                 ActualizarEstadoBotonAsignarAutoAPersona();
+                ActualizarGrillaDeAutosYDueños();
                 GC.WaitForPendingFinalizers();
                 GC.Collect();
 
@@ -242,6 +262,7 @@ namespace ActividadIntegradoraNro1
                 ActualizarGrillaAutosDePersona();
                 ActualizarEstadoBotonEliminarPersona();
                 ActualizarEstadoBotonAsignarAutoAPersona();
+                ActualizarGrillaDeAutosYDueños();
                 GC.WaitForPendingFinalizers();
                 GC.Collect();
             }
@@ -275,14 +296,19 @@ namespace ActividadIntegradoraNro1
         {
             if (GrillaAutosTieneFilasSeleccionadas())
             {
-                var auto = ObtenerAutoDeFilaSeleccionada();
-                var formularioModificarAuto = new FormularioModificarAuto(in auto);
+                var autoOriginal = ObtenerAutoDeFilaSeleccionada();
+                var formularioModificarAuto = new FormularioModificarAuto(autoOriginal);
                 if (formularioModificarAuto.ShowDialog() == DialogResult.OK)
                 {
                     var autoModificado = formularioModificarAuto.Auto;
-                    ActualizarAutoDeLista(in autoModificado);
+                    autoOriginal.Patente = autoModificado.Patente;
+                    autoOriginal.Marca = autoModificado.Marca;
+                    autoOriginal.Modelo = autoModificado.Modelo;
+                    autoOriginal.Año = autoModificado.Año;
+                    autoOriginal.Precio = autoModificado.Precio;
                     ActualizarGrillaAutos();
                     ActualizarGrillaAutosDePersona();
+                    ActualizarGrillaDeAutosYDueños();
                 }
             }
             else
@@ -300,50 +326,25 @@ namespace ActividadIntegradoraNro1
             }
         }
 
-        private void ActualizarAutoDeLista(in Auto autoModificado)
-        {
-            var auto = ObtenerAutoDeFilaSeleccionada();
-            if (Autos.Remove(auto))
-            {
-                Autos.Add(autoModificado);
-                MessageBox.Show($"El auto con patente {auto.Patente} ha sido modificado.");
-            }
-            else
-            {
-                MessageBox.Show($"No se pudo modificar el auto con patente {auto.Patente}.");
-            }
-        }
-
         private void BotonModificarPersona_Click(object sender, EventArgs e)
         {
             if (GrillaPersonasTieneFilasSeleccionadas())
             {
-                var persona = ObtenerPersonaDeFilaSeleccionada();
-                var formularioModificarPersona = new FormularioModificarPersona(in persona);
+                var personaOriginal = ObtenerPersonaDeFilaSeleccionada();
+                var formularioModificarPersona = new FormularioModificarPersona(personaOriginal);
                 if (formularioModificarPersona.ShowDialog() == DialogResult.OK)
                 {
                     var personaModificada = formularioModificarPersona.Persona;
-                    ActualizarPersonaDeLista(in personaModificada);
+                    personaOriginal.DNI = personaModificada.DNI;
+                    personaOriginal.Nombre = personaModificada.Nombre;
+                    personaOriginal.Apellido = personaModificada.Apellido;
                     ActualizarGrillaPersonas();
+                    ActualizarGrillaDeAutosYDueños();
                 }
             }
             else
             {
                 MessageBox.Show("No se ha seleccionado ninguna persona.");
-            }
-        }
-
-        private void ActualizarPersonaDeLista(in Persona personaModificada)
-        {
-            var persona = ObtenerPersonaDeFilaSeleccionada();
-            if (Personas.Remove(persona))
-            {
-                Personas.Add(personaModificada);
-                MessageBox.Show($"La persona con DNI {persona.DNI} ha sido modificada.");
-            }
-            else
-            {
-                MessageBox.Show($"No se pudo modificar la persona con DNI {persona.DNI}.");
             }
         }
     }

@@ -55,9 +55,18 @@
             botonEliminarPersona = new Button();
             botonModificarAuto = new Button();
             botonModificarPersona = new Button();
+            grillaAutosYDueños = new DataGridView();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
+            Column6 = new DataGridViewTextBoxColumn();
+            etiquetaAutoYDueño = new Label();
             ((System.ComponentModel.ISupportInitialize)grillaPersonas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grillaAutos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grillaAutosDePersona).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)grillaAutosYDueños).BeginInit();
             SuspendLayout();
             // 
             // grillaPersonas
@@ -111,7 +120,7 @@
             // 
             // botonAgregarPersona
             // 
-            botonAgregarPersona.Location = new Point(12, 402);
+            botonAgregarPersona.Location = new Point(12, 183);
             botonAgregarPersona.Name = "botonAgregarPersona";
             botonAgregarPersona.Size = new Size(110, 23);
             botonAgregarPersona.TabIndex = 2;
@@ -122,7 +131,7 @@
             // etiquetaAutos
             // 
             etiquetaAutos.AutoSize = true;
-            etiquetaAutos.Location = new Point(12, 199);
+            etiquetaAutos.Location = new Point(12, 221);
             etiquetaAutos.Name = "etiquetaAutos";
             etiquetaAutos.Size = new Size(38, 15);
             etiquetaAutos.TabIndex = 4;
@@ -134,7 +143,7 @@
             grillaAutos.AllowUserToDeleteRows = false;
             grillaAutos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             grillaAutos.Columns.AddRange(new DataGridViewColumn[] { Patente, Marca, Modelo, Año, Precio });
-            grillaAutos.Location = new Point(12, 217);
+            grillaAutos.Location = new Point(12, 239);
             grillaAutos.MultiSelect = false;
             grillaAutos.Name = "grillaAutos";
             grillaAutos.ReadOnly = true;
@@ -179,7 +188,7 @@
             // 
             // botonAgregarAuto
             // 
-            botonAgregarAuto.Location = new Point(12, 373);
+            botonAgregarAuto.Location = new Point(12, 395);
             botonAgregarAuto.Name = "botonAgregarAuto";
             botonAgregarAuto.Size = new Size(110, 23);
             botonAgregarAuto.TabIndex = 5;
@@ -190,7 +199,7 @@
             // botonAsignarAutoAPersona
             // 
             botonAsignarAutoAPersona.Enabled = false;
-            botonAsignarAutoAPersona.Location = new Point(12, 431);
+            botonAsignarAutoAPersona.Location = new Point(474, 183);
             botonAsignarAutoAPersona.Name = "botonAsignarAutoAPersona";
             botonAsignarAutoAPersona.Size = new Size(147, 23);
             botonAsignarAutoAPersona.TabIndex = 6;
@@ -254,7 +263,7 @@
             // botonEliminarAuto
             // 
             botonEliminarAuto.Enabled = false;
-            botonEliminarAuto.Location = new Point(254, 373);
+            botonEliminarAuto.Location = new Point(254, 395);
             botonEliminarAuto.Name = "botonEliminarAuto";
             botonEliminarAuto.Size = new Size(110, 23);
             botonEliminarAuto.TabIndex = 11;
@@ -265,7 +274,7 @@
             // botonEliminarPersona
             // 
             botonEliminarPersona.Enabled = false;
-            botonEliminarPersona.Location = new Point(254, 402);
+            botonEliminarPersona.Location = new Point(254, 183);
             botonEliminarPersona.Name = "botonEliminarPersona";
             botonEliminarPersona.Size = new Size(110, 23);
             botonEliminarPersona.TabIndex = 12;
@@ -276,7 +285,7 @@
             // botonModificarAuto
             // 
             botonModificarAuto.Enabled = false;
-            botonModificarAuto.Location = new Point(128, 373);
+            botonModificarAuto.Location = new Point(128, 395);
             botonModificarAuto.Name = "botonModificarAuto";
             botonModificarAuto.Size = new Size(120, 23);
             botonModificarAuto.TabIndex = 13;
@@ -287,7 +296,7 @@
             // botonModificarPersona
             // 
             botonModificarPersona.Enabled = false;
-            botonModificarPersona.Location = new Point(128, 402);
+            botonModificarPersona.Location = new Point(128, 183);
             botonModificarPersona.Name = "botonModificarPersona";
             botonModificarPersona.Size = new Size(120, 23);
             botonModificarPersona.TabIndex = 14;
@@ -295,11 +304,72 @@
             botonModificarPersona.UseVisualStyleBackColor = true;
             botonModificarPersona.Click += BotonModificarPersona_Click;
             // 
+            // grillaAutosYDueños
+            // 
+            grillaAutosYDueños.AllowUserToAddRows = false;
+            grillaAutosYDueños.AllowUserToDeleteRows = false;
+            grillaAutosYDueños.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            grillaAutosYDueños.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6 });
+            grillaAutosYDueños.Location = new Point(474, 239);
+            grillaAutosYDueños.MultiSelect = false;
+            grillaAutosYDueños.Name = "grillaAutosYDueños";
+            grillaAutosYDueños.ReadOnly = true;
+            grillaAutosYDueños.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            grillaAutosYDueños.Size = new Size(443, 150);
+            grillaAutosYDueños.TabIndex = 15;
+            // 
+            // Column1
+            // 
+            Column1.HeaderText = "Marca";
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            Column2.HeaderText = "Año";
+            Column2.Name = "Column2";
+            Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Modelo";
+            Column3.Name = "Column3";
+            Column3.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Patente";
+            Column4.Name = "Column4";
+            Column4.ReadOnly = true;
+            // 
+            // Column5
+            // 
+            Column5.HeaderText = "DNI del Dueño";
+            Column5.Name = "Column5";
+            Column5.ReadOnly = true;
+            // 
+            // Column6
+            // 
+            Column6.HeaderText = "Apellido y Nombre del Dueño";
+            Column6.Name = "Column6";
+            Column6.ReadOnly = true;
+            // 
+            // etiquetaAutoYDueño
+            // 
+            etiquetaAutoYDueño.AutoSize = true;
+            etiquetaAutoYDueño.Location = new Point(474, 221);
+            etiquetaAutoYDueño.Name = "etiquetaAutoYDueño";
+            etiquetaAutoYDueño.Size = new Size(155, 15);
+            etiquetaAutoYDueño.TabIndex = 16;
+            etiquetaAutoYDueño.Text = "Autos y Dueños (Si tienen...)";
+            // 
             // GrillaPersonasYAutos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(930, 485);
+            ClientSize = new Size(930, 438);
+            Controls.Add(etiquetaAutoYDueño);
+            Controls.Add(grillaAutosYDueños);
             Controls.Add(botonModificarPersona);
             Controls.Add(botonModificarAuto);
             Controls.Add(botonEliminarPersona);
@@ -318,6 +388,7 @@
             ((System.ComponentModel.ISupportInitialize)grillaPersonas).EndInit();
             ((System.ComponentModel.ISupportInitialize)grillaAutos).EndInit();
             ((System.ComponentModel.ISupportInitialize)grillaAutosDePersona).EndInit();
+            ((System.ComponentModel.ISupportInitialize)grillaAutosYDueños).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -351,5 +422,13 @@
         private Button botonEliminarPersona;
         private Button botonModificarAuto;
         private Button botonModificarPersona;
+        private DataGridView grillaAutosYDueños;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn Column5;
+        private DataGridViewTextBoxColumn Column6;
+        private Label etiquetaAutoYDueño;
     }
 }

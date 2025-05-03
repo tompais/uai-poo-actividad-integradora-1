@@ -7,13 +7,13 @@ namespace ActividadIntegradoraNro1.GUI.Formularios
     {
         public Auto Auto { get; set; }
 
-        public FormularioModificarAuto(in Auto auto)
+        public FormularioModificarAuto(Auto auto)
         {
             InitializeComponent();
-            CargarDatosAuto(in auto);
+            CargarDatosAuto(auto);
         }
 
-        private void CargarDatosAuto(in Auto auto)
+        private void CargarDatosAuto(Auto auto)
         {
             campoTextoPatente.Text = auto.Patente;
             campoDeTextoMarca.Text = auto.Marca;

@@ -6,13 +6,13 @@ namespace ActividadIntegradoraNro1.GUI
     public partial class FormularioModificarPersona : Form
     {
         public Persona Persona { get; set; }
-        public FormularioModificarPersona(in Persona persona)
+        public FormularioModificarPersona(Persona persona)
         {
             InitializeComponent();
             CargarDatosPersona(in persona);
         }
 
-        private void CargarDatosPersona(in Persona persona)
+        private void CargarDatosPersona(Persona persona)
         {
             campoTextoDNI.Text = persona.DNI;
             campoTextoNombre.Text = persona.Nombre;
